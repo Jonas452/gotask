@@ -2,6 +2,7 @@ version: '3'
 services:
   gotask_db:
     image: "postgres"
+    container_name: gotask_db
     env_file:
       - database.env
     volumes:
@@ -11,6 +12,7 @@ services:
     networks:
       - gotask-net
   gotask_api:
+    container_name: gotask_api
     build:
       context: ../
       dockerfile: build/Dockerfile
@@ -25,6 +27,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    depends_on: 
+      - gotask_db
 volumes:
   db-data:
 networks: 
