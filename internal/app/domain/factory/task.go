@@ -11,18 +11,22 @@ type Task struct{}
 // ToEntity generates domain.Task from model.Task
 func (tf Task) ToEntity(tm model.Task) domain.Task {
 	return domain.Task{
-		ID:      tm.ID,
-		Title:   tm.Title,
-		Message: tm.Message,
+		ID:        tm.ID,
+		Title:     tm.Title,
+		Message:   tm.Message,
+		CreatedAt: tm.CreatedAt,
+		UpdatedAt: tm.UpdatedAt,
 	}
 }
 
 // ToModel generates a model.Task from a domain.Task
 func (tf Task) ToModel(te domain.Task) model.Task {
 	return model.Task{
-		ID:      te.ID,
-		Title:   te.Title,
-		Message: te.Message,
+		ID:        te.ID,
+		Title:     te.Title,
+		Message:   te.Message,
+		CreatedAt: te.CreatedAt,
+		UpdatedAt: te.UpdatedAt,
 	}
 }
 
@@ -35,9 +39,11 @@ func (tf Task) ToManyEntities(
 
 	for i := 0; i < tmLen; i++ {
 		tasks[i] = domain.Task{
-			ID:      tm[i].ID,
-			Title:   tm[i].Title,
-			Message: tm[i].Message,
+			ID:        tm[i].ID,
+			Title:     tm[i].Title,
+			Message:   tm[i].Message,
+			CreatedAt: tm[i].CreatedAt,
+			UpdatedAt: tm[i].UpdatedAt,
 		}
 	}
 
@@ -53,9 +59,11 @@ func (tf Task) ToManyModels(
 
 	for i := 0; i < teLen; i++ {
 		tasks[i] = model.Task{
-			ID:      te[i].ID,
-			Title:   te[i].Title,
-			Message: te[i].Message,
+			ID:        te[i].ID,
+			Title:     te[i].Title,
+			Message:   te[i].Message,
+			CreatedAt: te[i].CreatedAt,
+			UpdatedAt: te[i].UpdatedAt,
 		}
 	}
 
