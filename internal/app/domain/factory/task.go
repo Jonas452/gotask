@@ -38,13 +38,7 @@ func (tf Task) ToManyEntities(
 	tasks := make([]domain.Task, tmLen)
 
 	for i := 0; i < tmLen; i++ {
-		tasks[i] = domain.Task{
-			ID:        tm[i].ID,
-			Title:     tm[i].Title,
-			Message:   tm[i].Message,
-			CreatedAt: tm[i].CreatedAt,
-			UpdatedAt: tm[i].UpdatedAt,
-		}
+		tasks[i] = tf.ToEntity(tm[i])
 	}
 
 	return tasks
@@ -58,13 +52,7 @@ func (tf Task) ToManyModels(
 	tasks := make([]model.Task, teLen)
 
 	for i := 0; i < teLen; i++ {
-		tasks[i] = model.Task{
-			ID:        te[i].ID,
-			Title:     te[i].Title,
-			Message:   te[i].Message,
-			CreatedAt: te[i].CreatedAt,
-			UpdatedAt: te[i].UpdatedAt,
-		}
+		tasks[i] = tf.ToModel(te[i])
 	}
 
 	return tasks
