@@ -55,14 +55,13 @@ func (t Task) Create(eTask domain.Task) (rTask domain.Task, err error) {
 }
 
 // Update updates a task in the database
-func (t Task) Update(id string, eTask domain.Task) (rTasl domain.Task, err error) {
+func (t Task) Update(eTask domain.Task) (rTasl domain.Task, err error) {
 	db := postgresql.Connection()
 
 	taskFactory := factory.Task{}
 	mTask := taskFactory.ToModel(eTask)
-	mTask.ID = id
 
-	result := db.Save(&mTask)
+	result := db.Updates(&mTask)
 	if result.Error != nil {
 		return domain.Task{}, result.Error
 	}

@@ -1,11 +1,9 @@
 package adapter
 
 import (
-	"encoding/json"
 	"gotask/internal/app/adapter/repository"
 	"gotask/internal/app/application/usecase"
 	"gotask/internal/app/domain"
-	"io/ioutil"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -44,23 +42,15 @@ func (ctrl Controller) getAllTasks(c *gin.Context) {
 }
 
 func (ctrl Controller) createTask(c *gin.Context) {
-
-	jsonData, err := ioutil.ReadAll(c.Request.Body)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
-		return
-	}
-
 	var jTask domain.Task
-	err = json.Unmarshal(jsonData, &jTask)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
+	if err := c.BindJSON(&jTask); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	task, err := usecase.CreateTask(taskRepository, jTask)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 
@@ -69,21 +59,14 @@ func (ctrl Controller) createTask(c *gin.Context) {
 
 func (ctrl Controller) updateTask(c *gin.Context) {
 	id := c.Param("id")
-	jsonData, err := ioutil.ReadAll(c.Request.Body)
-
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
-		return
-	}
-
 	var jTask domain.Task
-	err = json.Unmarshal(jsonData, &jTask)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
+	if err := c.BindJSON(&jTask); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	task, err := usecase.UpdateTask(taskRepository, id, jTask)
+	jTask.ID = id
+	task, err := usecase.UpdateTask(taskRepository, jTask)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return

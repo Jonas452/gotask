@@ -6,6 +6,6 @@ import (
 )
 
 // UpdateTask updates a task in the database
-func UpdateTask(tr repository.ITask, id string, task domain.Task) (rTask domain.Task, err error) {
-	return tr.Update(id, task)
+func UpdateTask(tr repository.ITask, task domain.Task) (rTask domain.Task, err error) {
+	return tr.Update(task)
 }
