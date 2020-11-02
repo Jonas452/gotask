@@ -6,6 +6,7 @@ import (
 	"gotask/internal/app/application/usecase"
 	"gotask/internal/app/domain"
 	"io/ioutil"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -34,36 +35,36 @@ func Router() *gin.Engine {
 func (ctrl Controller) getTask(c *gin.Context) {
 	id := c.Param("id")
 	task := usecase.GetTask(taskRepository, id)
-	c.JSON(200, task)
+	c.JSON(http.StatusOK, task)
 }
 
 func (ctrl Controller) getAllTasks(c *gin.Context) {
 	tasks := usecase.GetAllTasks(taskRepository)
-	c.JSON(200, tasks)
+	c.JSON(http.StatusOK, tasks)
 }
 
 func (ctrl Controller) createTask(c *gin.Context) {
 
 	jsonData, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
-		c.JSON(400, err)
+		c.JSON(http.StatusBadRequest, err)
 		return
 	}
 
 	var jTask domain.Task
 	err = json.Unmarshal(jsonData, &jTask)
 	if err != nil {
-		c.JSON(400, err)
+		c.JSON(http.StatusBadRequest, err)
 		return
 	}
 
 	task, err := usecase.CreateTask(taskRepository, jTask)
 	if err != nil {
-		c.JSON(400, err)
+		c.JSON(http.StatusBadRequest, err)
 		return
 	}
 
-	c.JSON(200, task)
+	c.JSON(http.StatusOK, task)
 }
 
 func (ctrl Controller) updateTask(c *gin.Context) {
@@ -71,24 +72,24 @@ func (ctrl Controller) updateTask(c *gin.Context) {
 	jsonData, err := ioutil.ReadAll(c.Request.Body)
 
 	if err != nil {
-		c.JSON(400, err)
+		c.JSON(http.StatusBadRequest, err)
 		return
 	}
 
 	var jTask domain.Task
 	err = json.Unmarshal(jsonData, &jTask)
 	if err != nil {
-		c.JSON(400, err)
+		c.JSON(http.StatusBadRequest, err)
 		return
 	}
 
 	task, err := usecase.UpdateTask(taskRepository, id, jTask)
 	if err != nil {
-		c.JSON(400, err)
+		c.JSON(http.StatusBadRequest, err)
 		return
 	}
 
-	c.JSON(200, task)
+	c.JSON(http.StatusOK, task)
 }
 
 func (ctrl Controller) deleteTask(c *gin.Context) {
@@ -96,9 +97,9 @@ func (ctrl Controller) deleteTask(c *gin.Context) {
 
 	err := usecase.DeleteTask(taskRepository, id)
 	if err != nil {
-		c.JSON(400, err)
+		c.JSON(http.StatusBadRequest, err)
 		return
 	}
 
-	c.JSON(200, true)
+	c.JSON(http.StatusOK, true)
 }
