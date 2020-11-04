@@ -21,6 +21,8 @@ func Router() *gin.Engine {
 	r := gin.Default()
 	ctrl := Controller{}
 
+	r.GET("/healthz", ctrl.healthz)
+
 	r.GET("/tasks/:id", ctrl.getTask)
 	r.GET("/tasks", ctrl.getAllTasks)
 	r.POST("/tasks", ctrl.createTask)
@@ -85,4 +87,8 @@ func (ctrl Controller) deleteTask(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, true)
+}
+
+func (ctrl Controller) healthz(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"alive": true})
 }
