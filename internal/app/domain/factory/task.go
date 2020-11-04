@@ -11,22 +11,22 @@ type Task struct{}
 // ToEntity generates domain.Task from model.Task
 func (tf Task) ToEntity(tm model.Task) domain.Task {
 	return domain.Task{
-		ID:        tm.ID,
-		Title:     tm.Title,
-		Message:   tm.Message,
-		CreatedAt: tm.CreatedAt,
-		UpdatedAt: tm.UpdatedAt,
+		ID:          tm.ID,
+		Title:       tm.Title,
+		Description: tm.Description,
+		CreatedAt:   tm.CreatedAt,
+		UpdatedAt:   tm.UpdatedAt,
 	}
 }
 
 // ToModel generates a model.Task from a domain.Task
 func (tf Task) ToModel(te domain.Task) model.Task {
 	return model.Task{
-		ID:        te.ID,
-		Title:     te.Title,
-		Message:   te.Message,
-		CreatedAt: te.CreatedAt,
-		UpdatedAt: te.UpdatedAt,
+		ID:          te.ID,
+		Title:       te.Title,
+		Description: te.Description,
+		CreatedAt:   te.CreatedAt,
+		UpdatedAt:   te.UpdatedAt,
 	}
 }
 

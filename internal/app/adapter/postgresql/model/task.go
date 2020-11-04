@@ -9,11 +9,11 @@ import (
 
 // Task represents the model of Task
 type Task struct {
-	ID        string `gorm:"type:uuid;primaryKey"`
-	Title     string `gorm:"type:text;not null"`
-	Message   string `gorm:"type:text"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	ID          string `gorm:"type:uuid;primaryKey"`
+	Title       string `gorm:"type:text;not null"`
+	Description string `gorm:"type:text"`
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }
 
 // BeforeCreate run before insert
