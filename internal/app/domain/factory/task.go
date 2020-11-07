@@ -1,6 +1,7 @@
 package factory
 
 import (
+	"database/sql"
 	"gotask/internal/app/adapter/postgresql/model"
 	"gotask/internal/app/domain"
 )
@@ -13,7 +14,8 @@ func (tf Task) ToEntity(tm model.Task) domain.Task {
 	return domain.Task{
 		ID:          tm.ID,
 		Title:       tm.Title,
-		Description: tm.Description,
+		Description: tm.Description.String,
+		DueDate:     tm.DueDate.Time,
 		CreatedAt:   tm.CreatedAt,
 		UpdatedAt:   tm.UpdatedAt,
 	}
@@ -24,7 +26,8 @@ func (tf Task) ToModel(te domain.Task) model.Task {
 	return model.Task{
 		ID:          te.ID,
 		Title:       te.Title,
-		Description: te.Description,
+		Description: sql.NullString{String: te.Description, Valid: len(te.Description) > 0},
+		DueDate:     sql.NullTime{Time: te.DueDate, Valid: !te.DueDate.IsZero()},
 		CreatedAt:   te.CreatedAt,
 		UpdatedAt:   te.UpdatedAt,
 	}
