@@ -52,7 +52,7 @@ func (ctrl Controller) createTask(c *gin.Context) {
 
 	task, err := usecase.CreateTask(taskRepository, jTask)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -70,7 +70,7 @@ func (ctrl Controller) updateTask(c *gin.Context) {
 	jTask.ID = id
 	task, err := usecase.UpdateTask(taskRepository, jTask)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -82,7 +82,7 @@ func (ctrl Controller) deleteTask(c *gin.Context) {
 
 	err := usecase.DeleteTask(taskRepository, id)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
