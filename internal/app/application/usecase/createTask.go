@@ -6,6 +6,6 @@ import (
 )
 
 //CreateTask is a usecase to insert a task at the database
-func CreateTask(tr repository.ITask, task domain.Task) (rTask domain.Task, err error) {
+func CreateTask(tr repository.ITask, task domain.Task) (domain.Task, error) {
 	return tr.Create(task)
 }

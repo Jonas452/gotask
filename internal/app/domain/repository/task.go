@@ -6,7 +6,7 @@ import "gotask/internal/app/domain"
 type ITask interface {
 	Get(id string) domain.Task
 	GetAll() []domain.Task
-	Create(eTask domain.Task) (task domain.Task, err error)
-	Update(eTask domain.Task) (task domain.Task, err error)
-	Delete(id string) (err error)
+	Create(eTask domain.Task) (domain.Task, error)
+	Update(eTask domain.Task) (domain.Task, error)
+	Delete(id string) error
 }

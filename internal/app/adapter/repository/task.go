@@ -40,7 +40,7 @@ func (t Task) GetAll() []domain.Task {
 }
 
 // Create inserts a task in the database
-func (t Task) Create(eTask domain.Task) (rTask domain.Task, err error) {
+func (t Task) Create(eTask domain.Task) (domain.Task, error) {
 	db := postgresql.Connection()
 
 	taskFactory := factory.Task{}
@@ -55,7 +55,7 @@ func (t Task) Create(eTask domain.Task) (rTask domain.Task, err error) {
 }
 
 // Update updates a task in the database
-func (t Task) Update(eTask domain.Task) (rTasl domain.Task, err error) {
+func (t Task) Update(eTask domain.Task) (domain.Task, error) {
 	db := postgresql.Connection()
 
 	taskFactory := factory.Task{}
@@ -70,7 +70,7 @@ func (t Task) Update(eTask domain.Task) (rTasl domain.Task, err error) {
 }
 
 // Delete deletes a task from the database
-func (t Task) Delete(id string) (err error) {
+func (t Task) Delete(id string) error {
 	db := postgresql.Connection()
 
 	var mTask model.Task
