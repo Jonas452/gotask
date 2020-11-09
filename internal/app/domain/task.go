@@ -1,6 +1,9 @@
 package domain
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 // Task represents the tasks in the system
 type Task struct {
@@ -10,4 +13,22 @@ type Task struct {
 	DueDate     time.Time `json:"due_date" binding:"omitempty,gt"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
+}
+
+// MarshalJSON custom marshal for Task
+func (t *Task) MarshalJSON() ([]byte, error) {
+	type Alias Task
+	var dueDate string
+	if !t.DueDate.IsZero() {
+		dueDate = t.DueDate.String()
+	}
+
+	return json.Marshal(&struct {
+		DueDate string `json:"due_date"`
+		*Alias
+	}{
+		DueDate: dueDate,
+		Alias:   (*Alias)(t),
+	})
+
 }
