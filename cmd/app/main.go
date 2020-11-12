@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gotask/internal/app/adapter"
 	"gotask/internal/app/migration"
+	"log"
 
 	"github.com/spf13/viper"
 )
@@ -13,7 +14,10 @@ func main() {
 	migration.Migrate()
 
 	r := adapter.Router()
-	r.Run(":8080")
+	err := r.Run(":8080")
+	if err != nil {
+		log.Fatalf("The server failed to start: %v", err)
+	}
 }
 
 func setupEnv() {
